@@ -1,0 +1,95 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+
+}
+
+model Role {
+  id        Int    @id @default(autoincrement())
+  role_name String @unique
+  users     User[]
+
+  @@map("roles")
+}
+
+model User {
+  id            String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  role_id       Int
+  username      String   @unique @db.VarChar(50)
+  password_hash String   @db.VarChar(255)
+  full_name     String
+  created_at    DateTime @default(now())
+
+  role             Role             @relation(fields: [role_id], references: [id])
+  academic_records AcademicRecord[]
+  attendance       Attendance[]
+
+  @@map("users")
+}
+
+model Student {
+  id        String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  class_id  Int
+  nisn      String @unique @db.VarChar(20)
+  full_name String
+
+  class            Class            @relation(fields: [class_id], references: [id])
+  academic_records AcademicRecord[]
+  attendance       Attendance[]
+
+  @@map("students")
+}
+
+model Class {
+  id          Int    @id @default(autoincrement())
+  class_name  String
+  grade_level String
+
+  students Student[]
+
+  @@map("classes")
+}
+
+model Subject {
+  id           Int    @id @default(autoincrement())
+  subject_code String @unique
+  subject_name String
+
+  records AcademicRecord[]
+
+  @@map("subjects")
+}
+
+model AcademicRecord {
+  id         String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  student_id String  @db.Uuid
+  subject_id Int
+  user_id    String  @db.Uuid
+  score      Decimal @db.Decimal(5, 2)
+  semester   String
+
+  student Student @relation(fields: [student_id], references: [id])
+  subject Subject @relation(fields: [subject_id], references: [id])
+  user    User    @relation(fields: [user_id], references: [id])
+
+  @@unique([student_id, subject_id, semester])
+  @@map("academic_records")
+}
+
+model Attendance {
+  id              String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  student_id      String   @db.Uuid
+  user_id         String   @db.Uuid
+  attendance_date DateTime @db.Date
+  status          String   @db.VarChar(10)
+  keterangan      String?
+
+  student Student @relation(fields: [student_id], references: [id])
+  user    User    @relation(fields: [user_id], references: [id])
+
+  @@unique([student_id, attendance_date])
+  @@map("attendance")
+}
