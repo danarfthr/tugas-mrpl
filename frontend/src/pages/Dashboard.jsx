@@ -29,15 +29,53 @@ const Dashboard = () => {
         <h1 style={{ marginBottom: '2rem' }}>Dashboard {user?.role}</h1>
 
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '1.5rem' }}>
-          
+
           {(user?.role === 'Super Admin' || user?.role === 'Admin Sekolah') && (
-             <div className="glass-panel" style={{ padding: '1.5rem', display: 'flex', flexDirection: 'column', height: '100%' }}>
-                <h3 style={{ marginBottom: '1rem' }}>Manajemen Data Master</h3>
+            <Link to="/admin/manajemen-user">
+              <div className="glass-panel" style={{ padding: '1.5rem', display: 'flex', flexDirection: 'column', height: '100%', cursor: 'pointer' }}>
+                <h3 style={{ marginBottom: '1rem' }}>Manajemen User</h3>
                 <p style={{ color: 'var(--text-muted)', marginBottom: '1.5rem', flexGrow: 1 }}>
-                   Kelola data entitas Siswa, Guru, dan Mata Pelajaran secara terpusat.
+                   Kelola akun Guru dan hak akses pengguna.
                 </p>
-                <button className="btn-primary" disabled>Akses Modul (Coming Soon)</button>
-             </div>
+                <button className="btn-primary" style={{ width: '100%' }}>Buka Modul</button>
+              </div>
+            </Link>
+          )}
+
+          {(user?.role === 'Super Admin' || user?.role === 'Admin Sekolah') && (
+            <Link to="/admin/data-siswa">
+              <div className="glass-panel" style={{ padding: '1.5rem', display: 'flex', flexDirection: 'column', height: '100%', cursor: 'pointer' }}>
+                <h3 style={{ marginBottom: '1rem' }}>Data Siswa</h3>
+                <p style={{ color: 'var(--text-muted)', marginBottom: '1.5rem', flexGrow: 1 }}>
+                   Kelola data siswa dan informasi kelas.
+                </p>
+                <button className="btn-primary" style={{ width: '100%' }}>Buka Modul</button>
+              </div>
+            </Link>
+          )}
+
+          {(user?.role === 'Super Admin' || user?.role === 'Admin Sekolah') && (
+            <Link to="/admin/data-kelas">
+              <div className="glass-panel" style={{ padding: '1.5rem', display: 'flex', flexDirection: 'column', height: '100%', cursor: 'pointer' }}>
+                <h3 style={{ marginBottom: '1rem' }}>Data Kelas</h3>
+                <p style={{ color: 'var(--text-muted)', marginBottom: '1.5rem', flexGrow: 1 }}>
+                   Kelola kelas dan guru wali kelas.
+                </p>
+                <button className="btn-primary" style={{ width: '100%' }}>Buka Modul</button>
+              </div>
+            </Link>
+          )}
+
+          {(user?.role === 'Super Admin' || user?.role === 'Admin Sekolah') && (
+            <Link to="/admin/data-mapel">
+              <div className="glass-panel" style={{ padding: '1.5rem', display: 'flex', flexDirection: 'column', height: '100%', cursor: 'pointer' }}>
+                <h3 style={{ marginBottom: '1rem' }}>Data Mata Pelajaran</h3>
+                <p style={{ color: 'var(--text-muted)', marginBottom: '1.5rem', flexGrow: 1 }}>
+                   Kelola mata pelajaran dan guru pengampu.
+                </p>
+                <button className="btn-primary" style={{ width: '100%' }}>Buka Modul</button>
+              </div>
+            </Link>
           )}
 
           {(user?.role === 'Guru Wali Kelas' || user?.role === 'Admin Sekolah') && (
@@ -53,13 +91,27 @@ const Dashboard = () => {
           )}
 
           {(user?.role === 'Guru Wali Kelas' || user?.role === 'Admin Sekolah') && (
-            <div className="glass-panel" style={{ padding: '1.5rem', display: 'flex', flexDirection: 'column', height: '100%' }}>
-               <h3 style={{ marginBottom: '1rem' }}>Sistem Presensi</h3>
-               <p style={{ color: 'var(--text-muted)', marginBottom: '1.5rem', flexGrow: 1 }}>
-                  Rekapitulasi absensi / status kehadiran siswa kelas harian.
-               </p>
-               <button className="btn-primary" disabled>Buka Modul Presensi (Coming Soon)</button>
-            </div>
+            <Link to="/akademik/input-presensi">
+              <div className="glass-panel" style={{ padding: '1.5rem', display: 'flex', flexDirection: 'column', height: '100%', cursor: 'pointer' }}>
+                 <h3 style={{ marginBottom: '1rem' }}>Sistem Presensi</h3>
+                 <p style={{ color: 'var(--text-muted)', marginBottom: '1.5rem', flexGrow: 1 }}>
+                    Rekapitulasi absensi / status kehadiran siswa kelas harian.
+                 </p>
+                 <button className="btn-primary" style={{ width: '100%' }}>Buka Modul Presensi</button>
+              </div>
+            </Link>
+          )}
+
+          {user?.role === 'Super Admin' && (
+            <Link to="/admin/sistem-konfigurasi">
+              <div className="glass-panel" style={{ padding: '1.5rem', display: 'flex', flexDirection: 'column', height: '100%', cursor: 'pointer' }}>
+                <h3 style={{ marginBottom: '1rem' }}>Sistem Konfigurasi</h3>
+                <p style={{ color: 'var(--text-muted)', marginBottom: '1.5rem', flexGrow: 1 }}>
+                   Pengaturan sistem, backup, dan monitoring.
+                </p>
+                <button className="btn-primary" style={{ width: '100%' }}>Buka Modul</button>
+              </div>
+            </Link>
           )}
 
         </div>

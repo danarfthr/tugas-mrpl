@@ -21,9 +21,8 @@ api.interceptors.response.use((response) => {
   return response;
 }, (error) => {
   if (error.response && error.response.status === 401) {
-    sessionStorage.removeItem('token');
-    sessionStorage.removeItem('user');
-    window.location.href = '/login';
+    // Don't redirect here - let components handle auth errors
+    // The ProtectedRoute component handles redirecting unauthenticated users
   }
   return Promise.reject(error);
 });
